@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "prefetch": "node scripts/prefetch.mjs"
+    "prefetch": "node scripts/prefetch.mjs",
+    "test": "node --test"
   },
   "devDependencies": {
     "playwright": "^1.49.0"
