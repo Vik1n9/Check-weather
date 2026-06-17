@@ -94,6 +94,7 @@ button:disabled {
 
 .metric-card,
 .forecast-section,
+.water-visual-section,
 .radar-section {
   background: var(--surface);
   border: 1px solid rgba(220, 228, 220, 0.9);
@@ -171,10 +172,12 @@ dd {
 }
 
 .forecast-section,
+.water-visual-section,
 .radar-section {
   padding: 24px;
 }
 
+.water-visual-section,
 .radar-section {
   margin-top: 22px;
 }
@@ -269,6 +272,29 @@ h2 {
   border-radius: 8px;
   background: #f7f9f8;
   overflow: hidden;
+}
+
+.water-visual-frame {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f7f9f8;
+  overflow: hidden;
+}
+
+.water-visual-frame svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #fff;
+}
+
+.empty-visual {
+  min-height: 220px;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-weight: 700;
 }
 
 .radar-frame img {
