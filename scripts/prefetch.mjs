@@ -21,9 +21,27 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const dataDir = path.join(__dirname, "..", "docs", "data");
 
 const WATER_PNG = path.join(dataDir, "water.png");
-const WATER_DEBUG_PNG = path.join(dataDir, "..", "..", "water-debug.png"); // not committed
+const repoRoot = path.join(dataDir, "..", "..");
+const WATER_DEBUG_PNG = path.join(repoRoot, "water-debug.png"); // not committed
+const WATER_DEBUG_HTML = path.join(repoRoot, "water-debug.html"); // not committed
 const RADAR_PNG = path.join(dataDir, "radar.png");
 const SUMMARY_JSON = path.join(dataDir, "summary.json");
+
+// Always dump what the browser is looking at, so the 新街橋 selectors can be
+// tuned against the real site (uploaded as Actions artifacts, never committed).
+async function saveWaterDebug(page, label) {
+  try {
+    await page.screenshot({ path: WATER_DEBUG_PNG });
+  } catch {
+    /* page may be mid-navigation */
+  }
+  try {
+    await writeFile(WATER_DEBUG_HTML, await page.content());
+  } catch {
+    /* ignore */
+  }
+  console.warn(`[water] saved debug artifacts (${label})`);
+}
 
 function taipeiNow(now = new Date()) {
   return new Intl.DateTimeFormat("zh-TW", {
@@ -96,56 +114,81 @@ async function prefetchWater() {
   const result = { found: false, station: TARGET_STATION, source: WATER_URL };
   const context = await browser.newContext({
     userAgent: "Mozilla/5.0 (X11; Linux x86_64) watcher dashboard",
-    viewport: { width: 1400, height: 1000 },
+    viewport: { width: 1440, height: 1200 },
+    locale: "zh-TW",
   });
   const page = await context.newPage();
+  page.setDefaultTimeout(30_000);
   try {
-    await page.goto(WATER_URL, { waitUntil: "networkidle", timeout: 60_000 });
+    // The ASP.NET site keeps long-lived connections open, so "networkidle"
+    // never settles (that caused a 60s goto timeout). Wait for the DOM instead.
+    await page.goto(WATER_URL, { waitUntil: "domcontentloaded", timeout: 45_000 });
 
-    // Make sure the 溪流水位站 category is selected, then submit.
+    // Make sure the 溪流水位站 category (value "2") is shown, then search.
     try {
-      await page.selectOption("select#ctl00_CPH_Content_ddlStation", "2", { timeout: 5_000 });
-      await Promise.all([
-        page.waitForLoadState("networkidle", { timeout: 30_000 }),
-        page.click("#ctl00_CPH_Content_btnSearch"),
-      ]);
+      await page.selectOption("#ctl00_CPH_Content_ddlStation", "2", { timeout: 5_000 });
+      await page.click("#ctl00_CPH_Content_btnSearch", { timeout: 5_000 });
+      await page.waitForLoadState("domcontentloaded", { timeout: 15_000 });
     } catch {
-      // Dropdown/button selectors may differ; continue with default view.
+      // Dropdown/button ids may differ across versions; continue with default view.
     }
 
-    // Click the 新街橋 trigger (text-based, robust to layout changes).
+    // Click the 新街橋 entry (text-based, robust to layout changes).
     const trigger = page.getByText(TARGET_STATION, { exact: false }).first();
     await trigger.waitFor({ state: "visible", timeout: 30_000 });
+    await trigger.scrollIntoViewIfNeeded().catch(() => {});
     await trigger.click();
 
-    // Wait for the popup cross-section: its title reads「新街橋（水位海拔高 …」.
-    const popup = page
-      .locator("div", { hasText: /新街橋（水位海拔高/ })
-      .last();
-    await popup.waitFor({ state: "visible", timeout: 20_000 });
-    await page.waitForTimeout(800); // let the diagram finish rendering
+    // The popup title reads「新街橋（水位海拔高 124.64 m）」. Wait for it to appear.
+    const title = page.getByText(/新街橋（水位海拔高/).first();
+    await title.waitFor({ state: "visible", timeout: 20_000 });
+    await page.waitForTimeout(1_200); // let the SVG cross-section finish rendering
 
-    await popup.screenshot({ path: WATER_PNG });
+    // Screenshot the dialog container; fall back to the title's nearest sized
+    // ancestor, then to the viewport, so we always capture something useful.
+    const dialog = page
+      .locator(".modal, .ui-dialog, [role=dialog], .popup, .layui-layer, .fancybox-content, .modal-content")
+      .filter({ hasText: /新街橋（水位海拔高/ })
+      .first();
 
-    const popupText = await popup.innerText();
-    const levelMatch = popupText.match(/(-?\d+(?:\.\d+)?)\s*m(?![^（]*）)/); // first standalone "x.xx m"
-    const timeMatch = popupText.match(/資料時間[:：]?\s*([\d/\-\s:]+)/);
-    const seaLevelMatch = popupText.match(/水位海拔高\s*(-?\d+(?:\.\d+)?)\s*m/);
+    let captured = false;
+    let scope = page.locator("body");
+    if (await dialog.count()) {
+      try {
+        await dialog.screenshot({ path: WATER_PNG });
+        scope = dialog;
+        captured = true;
+      } catch {
+        /* try next strategy */
+      }
+    }
+    if (!captured) {
+      const ancestor = title.locator("xpath=ancestor::div[1]");
+      try {
+        await ancestor.screenshot({ path: WATER_PNG });
+        scope = ancestor;
+        captured = true;
+      } catch {
+        /* try next strategy */
+      }
+    }
+    if (!captured) {
+      await page.screenshot({ path: WATER_PNG });
+    }
+
+    const text = (await scope.innerText().catch(() => "")) || "";
+    const timeMatch = text.match(/資料時間[:：]?\s*([\d/\-\s:]+)/);
+    const seaLevelMatch = text.match(/水位海拔高\s*(-?\d+(?:\.\d+)?)\s*m/);
 
     result.found = true;
-    result.level = levelMatch ? `${levelMatch[1]}m` : null;
     result.seaLevelHeight = seaLevelMatch ? `${seaLevelMatch[1]}m` : null;
     result.observedAt = timeMatch ? timeMatch[1].trim() : null;
     result.imageFile = "water.png";
+
+    // Keep a debug copy of the successful capture for inspection too.
+    await saveWaterDebug(page, "success");
   } catch (error) {
-    // Save a full-page debug shot (uploaded as an Actions artifact, not committed)
-    // so the 新街橋 selectors can be tuned against the real site.
-    try {
-      await page.screenshot({ path: WATER_DEBUG_PNG, fullPage: true });
-      console.warn(`[water] saved debug screenshot to ${WATER_DEBUG_PNG}`);
-    } catch {
-      // ignore debug-capture failures
-    }
+    await saveWaterDebug(page, "failure");
     throw error;
   } finally {
     await browser.close();

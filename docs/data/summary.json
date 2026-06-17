@@ -1,11 +1,11 @@
 {
   "weather": {
     "station": "農工中心",
-    "observedAt": "06/18 (四) 05:30",
+    "observedAt": "06/18 (四) 06:00",
     "current": {
-      "temperatureC": "25",
-      "apparentTemperatureC": "29",
-      "humidityPercent": "90",
+      "temperatureC": "26",
+      "apparentTemperatureC": "30",
+      "humidityPercent": "88",
       "hourlyRainMm": "0.0",
       "sunrise": "05:06",
       "sunset": "18:47"
@@ -17,7 +17,7 @@
     "source": "https://www.cwa.gov.tw/Data/js/3hr/ChartData_3hr_R_AgriM.js"
   },
   "radar": {
-    "observedAt": "2026/06/18 06:00",
+    "observedAt": "2026/06/18 06:30",
     "caption": "無地形，臺灣鄰近區域，靜止圖",
     "imageFile": "radar.png",
     "imageUrl": null,
@@ -25,13 +25,13 @@
   },
   "water": {
     "found": true,
-    "station": "新街橋",
-    "level": "0.75m",
-    "seaLevelHeight": "124.64m",
-    "observedAt": "尚未更新（範例資料）",
+    "station": "觀新橋",
+    "level": "1.32m",
+    "fallbackUsed": true,
+    "note": "來源彈窗擷取失敗，且來源沒有「新街橋」，改顯示近似站「觀新橋」。",
     "imageFile": "water.png",
     "source": "https://winfo.tycg.gov.tw/tysafep/Webpage/water.aspx"
   },
-  "generatedAt": "2026-06-17T22:16:54.306Z",
-  "generatedAtTaipei": "2026/06/18 06:16"
+  "generatedAt": "2026-06-17T22:42:44.048Z",
+  "generatedAtTaipei": "2026/06/18 06:42"
 }

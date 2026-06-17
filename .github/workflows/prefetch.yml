@@ -48,12 +48,14 @@ jobs:
         env:
           TZ: Asia/Taipei
 
-      - name: Upload water debug screenshot
+      - name: Upload water debug artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: water-debug
-          path: water-debug.png
+          path: |
+            water-debug.png
+            water-debug.html
           if-no-files-found: ignore
 
       - name: Commit refreshed artifacts
