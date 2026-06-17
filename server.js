@@ -4,7 +4,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const modulePath = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(modulePath);
 const publicDir = path.join(__dirname, "public");
 const port = Number(process.env.PORT || 4173);
 
@@ -209,6 +210,33 @@ function parseWaterRows(html) {
   return rows;
 }
 
+function meterNumber(value = "") {
+  const match = String(value).match(/-?\d+(?:\.\d+)?/);
+  if (!match) return null;
+  const number = Number(match[0]);
+  return Number.isFinite(number) ? number : null;
+}
+
+function buildWaterVisual(row) {
+  const waterLevelM = meterNumber(row.waterLevel);
+  const leftBankHeightM = meterNumber(row.leftBankHeight);
+  const rightBankHeightM = meterNumber(row.rightBankHeight);
+  const heights = [waterLevelM, leftBankHeightM, rightBankHeightM].filter(Number.isFinite);
+
+  return {
+    sourceKind: "embedded-water-level-diagram",
+    title: row.station || TARGET_STATION,
+    stream: row.stream || "",
+    waterLevel: row.waterLevel || "",
+    waterLevelM,
+    leftBankHeight: row.leftBankHeight || "",
+    leftBankHeightM,
+    rightBankHeight: row.rightBankHeight || "",
+    rightBankHeightM,
+    maxHeightM: heights.length ? Math.max(...heights) : null,
+  };
+}
+
 function findWaterStation(rows) {
   const exact = rows.find((row) => row.station === TARGET_STATION || row.text.includes(TARGET_STATION));
   if (exact) return { row: exact, fallback: false, requestedStation: TARGET_STATION };
@@ -241,6 +269,7 @@ async function getWater() {
     waterLevel: match.row.waterLevel,
     leftBankHeight: match.row.leftBankHeight,
     rightBankHeight: match.row.rightBankHeight,
+    visual: buildWaterVisual(match.row),
     found: true,
     source: WATER_URL,
     updatedAt: new Date().toISOString(),
@@ -316,6 +345,13 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-server.listen(port, () => {
-  console.log(`Watcher dashboard running at http://localhost:${port}`);
-});
+if (process.argv[1] === modulePath) {
+  server.listen(port, () => {
+    console.log(`Watcher dashboard running at http://localhost:${port}`);
+  });
+}
+
+export {
+  buildWaterVisual,
+  parseWaterRows,
+};
