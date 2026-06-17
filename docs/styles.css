@@ -93,7 +93,6 @@ button:disabled {
 }
 
 .metric-card,
-.forecast-section,
 .radar-section {
   background: var(--surface);
   border: 1px solid rgba(220, 228, 220, 0.9);
@@ -147,7 +146,22 @@ dl {
 }
 
 .water-card dl {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.highlow {
+  display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.highlow dd {
+  font-size: 22px;
+}
+
+.weather-card .highlow dd {
+  color: var(--green);
 }
 
 dt {
@@ -170,12 +184,8 @@ dd {
   line-height: 1.5;
 }
 
-.forecast-section,
 .radar-section {
   padding: 24px;
-}
-
-.radar-section {
   margin-top: 22px;
 }
 
@@ -193,72 +203,6 @@ h2 {
 }
 
 .section-head span {
-  color: var(--muted);
-  font-size: 14px;
-}
-
-.chart {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(28px, 1fr));
-  align-items: end;
-  gap: 8px;
-  height: 190px;
-  padding: 18px 14px 12px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: linear-gradient(180deg, #f9fbfc, #eef5f2);
-  overflow: hidden;
-}
-
-.bar {
-  position: relative;
-  min-height: 28px;
-  border-radius: 6px 6px 2px 2px;
-  background: linear-gradient(180deg, #f0a94b, #1f7a5a);
-}
-
-.bar span {
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% + 6px);
-  transform: translateX(-50%);
-  color: var(--ink);
-  font-size: 12px;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-.forecast-list {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: 18px;
-}
-
-.forecast-item {
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 14px;
-  background: #fbfcfb;
-}
-
-.forecast-item time {
-  display: block;
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.forecast-item strong {
-  display: block;
-  margin-top: 8px;
-  font-size: 28px;
-  line-height: 1;
-}
-
-.forecast-item span {
-  display: block;
-  margin-top: 8px;
   color: var(--muted);
   font-size: 14px;
 }
@@ -300,18 +244,12 @@ h2 {
     flex-direction: column;
   }
 
-  .summary-grid,
-  .forecast-list {
+  .summary-grid {
     grid-template-columns: 1fr;
   }
 
   dl,
   .water-card dl {
     grid-template-columns: 1fr;
-  }
-
-  .chart {
-    grid-template-columns: repeat(6, minmax(28px, 1fr));
-    height: 220px;
   }
 }
