@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>農工中心氣象與水位</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <h1>農工中心氣象與水位</h1>
+          <p>中央氣象署農業氣象站 M024 與桃園市水情資訊網</p>
+        </div>
+        <button id="refreshButton" type="button">重新整理</button>
+      </header>
+
+      <section class="status" id="status">載入中...</section>
+
+      <section class="summary-grid">
+        <article class="metric-card weather-card">
+          <span class="label">農工中心目前氣象</span>
+          <div class="metric-line">
+            <strong id="currentTemp">--</strong>
+            <span id="currentWeather">--</span>
+          </div>
+          <dl>
+            <div><dt>體感</dt><dd id="currentAt">--</dd></div>
+            <div><dt>濕度</dt><dd id="currentRh">--</dd></div>
+            <div><dt>時雨量</dt><dd id="currentRain">--</dd></div>
+          </dl>
+        </article>
+
+        <article class="metric-card water-card">
+          <span class="label">新街橋水位高度</span>
+          <div class="metric-line">
+            <strong id="waterLevel">--</strong>
+            <span id="waterStation">--</span>
+          </div>
+          <p id="waterNote" class="note"></p>
+          <dl>
+            <div><dt>溪流</dt><dd id="waterStream">--</dd></div>
+            <div><dt>資料時間</dt><dd id="waterTime">--</dd></div>
+          </dl>
+        </article>
+      </section>
+
+      <section class="forecast-section">
+        <div class="section-head">
+          <h2>農工中心預測氣溫與天氣</h2>
+          <span id="forecastTime">--</span>
+        </div>
+        <div class="chart" id="tempChart" aria-label="溫度趨勢圖"></div>
+        <div class="forecast-list" id="forecastList"></div>
+      </section>
+
+      <section class="radar-section">
+        <div class="section-head">
+          <h2>雷達回波</h2>
+          <span id="radarTime">--</span>
+        </div>
+        <figure class="radar-frame">
+          <img id="radarImage" alt="臺灣鄰近區域雷達回波靜止圖">
+          <figcaption id="radarCaption">臺灣鄰近區域，靜止圖</figcaption>
+        </figure>
+      </section>
+    </main>
+    <script src="/app.js" defer></script>
+  </body>
+</html>
