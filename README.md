@@ -4,7 +4,7 @@
 
 ## 線上瀏覽
 
-👉 **https://vik1n9.github.io/check-weather/**
+👉 **https://vik1n9.github.io/Check-weather/**
 
 頁面為純靜態網站，資料由 GitHub Actions 每 2 小時自動預抓更新（含新街橋水位剖面圖截圖）。
 

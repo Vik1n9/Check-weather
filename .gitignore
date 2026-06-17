@@ -3,5 +3,6 @@
 node_modules/
 npm-debug.log*
 
-# Prefetch debug artifact (uploaded to Actions, never committed)
+# Prefetch debug artifacts (uploaded to Actions, never committed)
 /water-debug.png
+/water-debug.html
