@@ -1,11 +1,15 @@
 {
-  "name": "watcher",
+  "name": "check-weather",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
+    "prefetch": "node scripts/prefetch.mjs",
     "test": "node --test"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
   }
 }

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>農工中心氣象與水位</title>
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="./styles.css">
   </head>
   <body>
     <main class="shell">
@@ -26,6 +26,10 @@
             <strong id="currentTemp">--</strong>
             <span id="currentWeather">--</span>
           </div>
+          <div class="highlow">
+            <div><dt>今日最高</dt><dd id="todayHigh">--</dd></div>
+            <div><dt>今日最低</dt><dd id="todayLow">--</dd></div>
+          </div>
           <dl>
             <div><dt>體感</dt><dd id="currentAt">--</dd></div>
             <div><dt>濕度</dt><dd id="currentRh">--</dd></div>
@@ -41,29 +45,20 @@
           </div>
           <p id="waterNote" class="note"></p>
           <dl>
-            <div><dt>溪流</dt><dd id="waterStream">--</dd></div>
             <div><dt>資料時間</dt><dd id="waterTime">--</dd></div>
           </dl>
         </article>
       </section>
 
-      <section class="water-visual-section">
+      <section class="radar-section">
         <div class="section-head">
-          <h2>水位圖</h2>
-          <span id="waterVisualTime">--</span>
+          <h2>新街橋水位剖面圖</h2>
+          <span id="waterShotTime">--</span>
         </div>
-        <figure class="water-visual-frame" id="waterVisual" aria-label="新街橋水位圖">
-          <p class="empty-visual">載入水位圖...</p>
+        <figure class="radar-frame">
+          <img id="waterImage" alt="新街橋水位剖面圖">
+          <figcaption id="waterCaption">桃園市水情資訊網，新街橋即時水位</figcaption>
         </figure>
-      </section>
-
-      <section class="forecast-section">
-        <div class="section-head">
-          <h2>農工中心預測氣溫與天氣</h2>
-          <span id="forecastTime">--</span>
-        </div>
-        <div class="chart" id="tempChart" aria-label="溫度趨勢圖"></div>
-        <div class="forecast-list" id="forecastList"></div>
       </section>
 
       <section class="radar-section">
@@ -77,6 +72,6 @@
         </figure>
       </section>
     </main>
-    <script src="/app.js" defer></script>
+    <script src="./app.js" defer></script>
   </body>
 </html>
