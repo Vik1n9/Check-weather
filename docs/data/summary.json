@@ -1,18 +1,27 @@
 {
   "weather": {
     "station": "農工中心",
-    "observedAt": "尚未更新（範例資料）",
+    "observedAt": "06/18 (四) 05:30",
     "current": {
-      "temperatureC": 28,
-      "apparentTemperatureC": 31,
-      "humidityPercent": 78,
-      "hourlyRainMm": 0
+      "temperatureC": "25",
+      "apparentTemperatureC": "29",
+      "humidityPercent": "90",
+      "hourlyRainMm": "0.0",
+      "sunrise": "05:06",
+      "sunset": "18:47"
     },
     "today": {
-      "highC": 31,
-      "lowC": 24
+      "highC": 33,
+      "lowC": 25
     },
     "source": "https://www.cwa.gov.tw/Data/js/3hr/ChartData_3hr_R_AgriM.js"
+  },
+  "radar": {
+    "observedAt": "2026/06/18 06:00",
+    "caption": "無地形，臺灣鄰近區域，靜止圖",
+    "imageFile": "radar.png",
+    "imageUrl": null,
+    "source": "https://www.cwa.gov.tw/Data/js/obs_img/Observe_radar.js"
   },
   "water": {
     "found": true,
@@ -23,13 +32,6 @@
     "imageFile": "water.png",
     "source": "https://winfo.tycg.gov.tw/tysafep/Webpage/water.aspx"
   },
-  "radar": {
-    "observedAt": "尚未更新（範例資料）",
-    "caption": "無地形，臺灣鄰近區域，靜止圖",
-    "imageFile": "radar.png",
-    "imageUrl": null,
-    "source": "https://www.cwa.gov.tw/Data/js/obs_img/Observe_radar.js"
-  },
-  "generatedAt": "2026-06-17T00:00:00.000Z",
-  "generatedAtTaipei": "尚未更新（範例資料）"
+  "generatedAt": "2026-06-17T22:16:54.306Z",
+  "generatedAtTaipei": "2026/06/18 06:16"
 }
