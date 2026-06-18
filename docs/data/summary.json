@@ -17,7 +17,7 @@
     "source": "https://www.cwa.gov.tw/Data/js/3hr/ChartData_3hr_R_AgriM.js"
   },
   "radar": {
-    "observedAt": "2026/06/18 18:20",
+    "observedAt": "2026/06/18 18:30",
     "caption": "無地形，臺灣鄰近區域，靜止圖",
     "imageFile": "radar.png",
     "imageUrl": null,
@@ -33,6 +33,6 @@
     "liveUrl": "https://winfo.tycg.gov.tw/tysafep/Default.aspx",
     "source": "https://winfo.tycg.gov.tw/tysafep/Default.aspx"
   },
-  "generatedAt": "2026-06-18T10:37:30.445Z",
-  "generatedAtTaipei": "2026/06/18 18:37"
+  "generatedAt": "2026-06-18T10:44:14.448Z",
+  "generatedAtTaipei": "2026/06/18 18:44"
 }
