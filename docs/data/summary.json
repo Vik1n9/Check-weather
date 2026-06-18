@@ -18,7 +18,7 @@
     "source": "https://www.cwa.gov.tw/Data/js/3hr/ChartData_3hr_R_AgriM.js"
   },
   "radar": {
-    "observedAt": "2026/06/18 19:30",
+    "observedAt": "2026/06/18 19:40",
     "caption": "無地形，臺灣鄰近區域，靜止圖",
     "imageFile": "radar.png",
     "imageUrl": null,
@@ -105,16 +105,17 @@
         0,
         0,
         0,
+        0,
         0
       ],
       "no": "20160519140201",
       "found": true,
       "source": "https://winfo.tycg.gov.tw/TYSAMOBILE/DataReview/D3_reservior_mountain.aspx?no=20160519140201",
-      "updatedAt": "2026-06-18T11:43:19.939Z"
+      "updatedAt": "2026-06-18T11:49:53.782Z"
     },
     "liveUrl": "https://winfo.tycg.gov.tw/tysafep/Default.aspx",
     "source": "https://winfo.tycg.gov.tw/tysafep/json/proxy.ashx?op=GetAlertInfoPOI&type=WStation"
   },
-  "generatedAt": "2026-06-18T11:43:20.450Z",
-  "generatedAtTaipei": "2026/06/18 19:43"
+  "generatedAt": "2026-06-18T11:49:54.276Z",
+  "generatedAtTaipei": "2026/06/18 19:49"
 }
