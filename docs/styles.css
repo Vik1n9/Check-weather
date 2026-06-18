@@ -149,19 +149,61 @@ dl {
   grid-template-columns: minmax(0, 1fr);
 }
 
-.highlow {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: 18px;
+.temp-headline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 22px;
+  margin-top: 12px;
 }
 
-.highlow dd {
-  font-size: 22px;
+.temp-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.weather-card .highlow dd {
+.temp-item .cap {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.temp-item strong {
+  font-size: clamp(38px, 6.5vw, 64px);
+  line-height: 0.95;
+  letter-spacing: 0;
+}
+
+.temp-item.low strong {
+  color: var(--blue);
+}
+
+.temp-item.high strong {
+  color: var(--amber);
+}
+
+.temp-item.pop strong {
   color: var(--green);
+}
+
+.now-line {
+  margin-top: 18px;
+  color: var(--ink);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.now-line strong {
+  font-size: 22px;
+  color: var(--green);
+}
+
+.now-line .meta {
+  margin-left: 10px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
 }
 
 dt {
@@ -232,15 +274,27 @@ h2 {
   border-top: 1px solid var(--line);
 }
 
-.embed-cta {
+.water-shot {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 14px;
-  padding: 20px;
+}
+
+.water-shot-frame {
+  display: block;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #f7f9f8;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.water-shot-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  background: #fff;
 }
 
 .embed-note {
@@ -249,19 +303,9 @@ h2 {
   line-height: 1.6;
 }
 
-.cta-button {
-  display: inline-block;
-  text-decoration: none;
-  border-radius: 8px;
-  background: var(--blue);
-  color: #fff;
-  padding: 14px 22px;
-  font-size: 16px;
+.embed-note a {
+  color: var(--blue);
   font-weight: 700;
-}
-
-.cta-button:hover {
-  filter: brightness(1.06);
 }
 
 .embed-meta {
@@ -273,6 +317,12 @@ h2 {
 .embed-meta strong {
   color: var(--blue);
   font-size: 20px;
+}
+
+.embed-meta .meta {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
 }
 
 @media (max-width: 780px) {

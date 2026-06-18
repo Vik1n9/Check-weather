@@ -1,23 +1,24 @@
 {
   "weather": {
     "station": "農工中心",
-    "observedAt": "06/18 (四) 18:00",
+    "observedAt": "06/18 (四) 18:30",
     "current": {
       "temperatureC": "28",
       "apparentTemperatureC": "32",
-      "humidityPercent": "78",
+      "humidityPercent": "80",
       "hourlyRainMm": "0.0",
       "sunrise": "05:06",
       "sunset": "18:47"
     },
     "today": {
-      "highC": 29,
-      "lowC": 26
+      "highC": 28,
+      "lowC": 26,
+      "rainProbabilityPercent": 0
     },
     "source": "https://www.cwa.gov.tw/Data/js/3hr/ChartData_3hr_R_AgriM.js"
   },
   "radar": {
-    "observedAt": "2026/06/18 18:30",
+    "observedAt": "2026/06/18 18:50",
     "caption": "無地形，臺灣鄰近區域，靜止圖",
     "imageFile": "radar.png",
     "imageUrl": null,
@@ -28,11 +29,14 @@
     "station": "新街橋",
     "stream": "新街溪",
     "level": "0.76m",
+    "bankHeight": "3.88m",
+    "observedAt": "2026/6/18 下午 07:00:00",
     "lat": "24.9628",
     "lon": "121.23013",
+    "imageUrl": "https://video3.wrbtycg.tw/node/image/6a183cd6-4b89-42e2-8bbf-6272fdbb8acb?live=1",
     "liveUrl": "https://winfo.tycg.gov.tw/tysafep/Default.aspx",
-    "source": "https://winfo.tycg.gov.tw/tysafep/Default.aspx"
+    "source": "https://winfo.tycg.gov.tw/tysafep/json/proxy.ashx?op=GetAlertInfoPOI&type=WStation"
   },
-  "generatedAt": "2026-06-18T10:44:14.448Z",
-  "generatedAtTaipei": "2026/06/18 18:44"
+  "generatedAt": "2026-06-18T11:04:40.853Z",
+  "generatedAtTaipei": "2026/06/18 19:04"
 }

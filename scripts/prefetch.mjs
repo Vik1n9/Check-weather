@@ -17,6 +17,8 @@ import {
   getWeather,
   getRadar,
   getRiverStation,
+  getWaterStationPOI,
+  getTodayRainProbability,
   computeTodayHighLow,
   RIVER_URL,
   TARGET_STATION,
@@ -44,6 +46,15 @@ function taipeiNow(now = new Date()) {
 async function prefetchWeather() {
   const weather = await getWeather();
   const today = computeTodayHighLow(weather);
+  // Today's rain probability is a separate module; never let it sink the whole
+  // weather card if it's momentarily unavailable.
+  try {
+    const pop = await getTodayRainProbability();
+    today.rainProbabilityPercent = pop.probabilityPercent;
+  } catch (error) {
+    console.warn(`[weather] rain probability unavailable: ${error.message}`);
+    today.rainProbabilityPercent = null;
+  }
   return {
     station: weather.station,
     observedAt: weather.observedAt,
@@ -78,28 +89,43 @@ async function prefetchRadar() {
 }
 
 // ---- Water (新街橋 river-stage station, plain HTTP) ------------------------
+// Two complementary官方 sources: the Default.aspx repeater (溪流 + level) and the
+// map POI feed (bank height, observed time, and the live station image the map
+// popup shows). The image is a plain <img>, so — unlike the X-Frame-Options
+// guarded map page — it can be embedded / opened directly.
 async function prefetchWater() {
-  const river = await getRiverStation(TARGET_STATION);
-  if (!river.found) {
+  const [riverR, poiR] = await Promise.allSettled([
+    getRiverStation(TARGET_STATION),
+    getWaterStationPOI(TARGET_STATION),
+  ]);
+  const river = riverR.status === "fulfilled" ? riverR.value : { found: false };
+  const poi = poiR.status === "fulfilled" ? poiR.value : { found: false };
+  if (poiR.status === "rejected") console.warn(`[water] POI feed: ${poiR.reason?.message}`);
+
+  if (!river.found && !poi.found) {
     return {
       found: false,
       station: TARGET_STATION,
-      source: river.source,
+      source: river.source || poi.source,
       liveUrl: RIVER_URL,
       note: `來源頁暫無「${TARGET_STATION}」水位資料。`,
     };
   }
   return {
     found: true,
-    station: river.station,
-    stream: river.stream,
-    level: river.waterLevel,
-    lat: river.lat,
-    lon: river.lon,
-    // Official cross-section popup — opened live in a new tab (cannot be
-    // embedded: the source sends X-Frame-Options: SAMEORIGIN).
+    station: poi.station || river.station,
+    stream: river.stream || "",
+    level: poi.level || river.waterLevel || "",
+    bankHeight: poi.bankHeight || "",
+    observedAt: poi.observedAt || "",
+    lat: poi.lat || river.lat || "",
+    lon: poi.lon || river.lon || "",
+    // Live station image — embedded / opened directly (a plain <img>, so the
+    // map page's X-Frame-Options does not apply). null when the feed had none.
+    imageUrl: poi.imageUrl || null,
+    // Official map (fallback link, e.g. when the live image is offline).
     liveUrl: RIVER_URL,
-    source: river.source,
+    source: poi.source || river.source,
   };
 }
 
