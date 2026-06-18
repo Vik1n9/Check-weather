@@ -1,23 +1,23 @@
 {
   "weather": {
     "station": "農工中心",
-    "observedAt": "06/18 (四) 06:00",
+    "observedAt": "06/18 (四) 12:00",
     "current": {
-      "temperatureC": "26",
-      "apparentTemperatureC": "30",
-      "humidityPercent": "88",
+      "temperatureC": "32",
+      "apparentTemperatureC": "35",
+      "humidityPercent": "65",
       "hourlyRainMm": "0.0",
       "sunrise": "05:06",
       "sunset": "18:47"
     },
     "today": {
-      "highC": 33,
-      "lowC": 25
+      "highC": 32,
+      "lowC": 26
     },
     "source": "https://www.cwa.gov.tw/Data/js/3hr/ChartData_3hr_R_AgriM.js"
   },
   "radar": {
-    "observedAt": "2026/06/18 06:30",
+    "observedAt": "2026/06/18 12:10",
     "caption": "無地形，臺灣鄰近區域，靜止圖",
     "imageFile": "radar.png",
     "imageUrl": null,
@@ -32,6 +32,6 @@
     "imageFile": "water.png",
     "source": "https://winfo.tycg.gov.tw/tysafep/Webpage/water.aspx"
   },
-  "generatedAt": "2026-06-17T22:45:35.988Z",
-  "generatedAtTaipei": "2026/06/18 06:45"
+  "generatedAt": "2026-06-18T04:27:42.548Z",
+  "generatedAtTaipei": "2026/06/18 12:27"
 }
