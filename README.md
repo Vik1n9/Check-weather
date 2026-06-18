@@ -16,6 +16,11 @@
   讀取新街橋即時水位、河岸高度、觀測時間與「官方測站即時影像」。該影像是純 `<img>`，
   不受地圖頁 `X-Frame-Options` 限制，因此直接內嵌在頁面顯示，並可點擊直接開啟正確的測站影像；
   影像離線時自動退回官方地圖連結。即時水位另以 `Default.aspx` 取得溪流名稱與備援水位。
+- **新街橋水位圖（剖面圖）**：水情網「詳細資訊」彈窗的剖面圖由
+  `TYSAMOBILE/DataReview/D3_reservior_mountain.aspx?no=<測站編號>` 提供（新街橋編號
+  `20160519140201`，取自 `water.aspx` 本局列管水位站清單的「詳細資訊」連結）。該頁把海拔高、
+  左右岸高度、黃／紅警戒水位、封橋警戒線、目前水位與三小時水位／雨量歷線都以行內 JS 變數內嵌，
+  預抓時直接解析。頁面以行內 SVG 重繪此剖面圖，顯示在即時水位影像上方。
 - **中央氣象署雷達回波**：無地形、臺灣鄰近區域的最新靜止圖
 
 ## 架構
@@ -26,9 +31,11 @@ GitHub Actions（每 2 小時／可手動）
        ├─ 氣象署 .js → 今日最高/最低溫              → docs/data/summary.json
        ├─ 氣象署 3hr 模組 → 今日降雨機率(PoP)        → docs/data/summary.json
        ├─ 雷達 .js + 下載圖                          → docs/data/radar.png
-       └─ 桃園 POI/Default.aspx → 新街橋水位+即時影像 → docs/data/summary.json
+       └─ 桃園 POI/Default.aspx → 新街橋水位+即時影像          → docs/data/summary.json
+       └─ 桃園 D3_reservior_mountain.aspx → 新街橋剖面圖資料   → docs/data/summary.json
   └─ commit docs/data/* 回 repo
 GitHub Pages（main /docs）→ 顯示靜態頁面（讀 ./data/summary.json）
+  └─ 水位圖以行內 SVG 重繪剖面圖（海拔高／左右岸／黃紅警戒／目前水位）
   └─ 測站即時影像直接內嵌（純 <img>），離線時退回官方地圖連結
 ```
 

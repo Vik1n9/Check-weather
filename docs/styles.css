@@ -325,6 +325,79 @@ h2 {
   font-weight: 700;
 }
 
+.water-chart-frame {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.water-chart {
+  display: block;
+  line-height: 0;
+}
+
+.water-chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.wc-abs {
+  fill: var(--ink);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.wc-bank {
+  fill: #9aa3a0;
+}
+
+.wc-water {
+  fill: #5b9bd5;
+}
+
+.wc-base {
+  stroke: #6b7873;
+  stroke-width: 2;
+}
+
+.wc-red {
+  stroke: #e23b2e;
+  stroke-width: 3;
+}
+
+.wc-yellow {
+  stroke: #f0972a;
+  stroke-width: 3;
+}
+
+.wc-red-label {
+  fill: #e23b2e;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.wc-yellow-label {
+  fill: #f0972a;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.wc-bank-label,
+.wc-zero {
+  fill: #fff;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.wc-level {
+  fill: var(--blue);
+  font-size: 56px;
+  font-weight: 800;
+}
+
 @media (max-width: 780px) {
   .shell {
     width: min(100% - 20px, 1180px);

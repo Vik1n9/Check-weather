@@ -16,12 +16,23 @@ export const RIVER_URL = "https://winfo.tycg.gov.tw/tysafep/Default.aspx";
 // level, bank height, observed time, and the live station image (剖面/即時影像).
 export const WATER_POI_URL =
   "https://winfo.tycg.gov.tw/tysafep/json/proxy.ashx?op=GetAlertInfoPOI&type=WStation";
+// The map / water.aspx「詳細資訊」cross-section popup (水位圖) is served by this
+// D3 page, keyed by the station's internal `no`. It carries everything the
+// official 剖面圖 shows: 海拔高, 左右岸高度, 黃/紅警戒水位, 封橋警戒線, the current
+// level, and the 3-hour 水位/雨量 history series. Unlike the map page it is a
+// plain HTML page we can scrape server-side.
+export const WATER_CHART_BASE =
+  "https://winfo.tycg.gov.tw/TYSAMOBILE/DataReview/D3_reservior_mountain.aspx";
 // Per-station逐三小時 forecast module (contains 降雨機率 / probability of precipitation).
 export const CWA_AGRIM_3HR_BASE = "https://www.cwa.gov.tw/V8/C/L/AgriM/MOD/3hr/";
 
 export const TARGET_PID = "M024";
 export const TARGET_STATION = "新街橋";
 export const FALLBACK_STATIONS = ["觀新橋"];
+// 新街橋's internal station id in the 本局列管水位站 list. Derived once from
+// water.aspx (ddlStation=2 →「詳細資訊」`<a class="modal-box" id=…>`), which the
+// page turns into D3_reservior_mountain.aspx?no=<id>. Station ids are stable.
+export const TARGET_STATION_NO = "20160519140201";
 
 const cache = new Map();
 
@@ -339,6 +350,61 @@ export async function getWaterStationPOI(name = TARGET_STATION) {
     ...parseWStationDetail(item),
     found: true,
     source: WATER_POI_URL,
+    updatedAt: new Date().toISOString(),
+  };
+}
+
+// ---- River-stage cross-section (水位圖, D3_reservior_mountain.aspx) ---------
+// The detail page embeds every value the official 剖面圖 draws as plain inline
+// JS: config1.* for the banks / alert levels / current reading, and var arrays
+// for the 3-hour 水位 / 海拔高 / 雨量 history. We pull them with simple regexes.
+export function parseWaterChart(html) {
+  const text = (re) => {
+    const m = html.match(re);
+    return m ? htmlText(m[1]) : "";
+  };
+  const num = (re) => {
+    const m = html.match(re);
+    const v = m ? Number(m[1]) : NaN;
+    return Number.isFinite(v) ? v : null;
+  };
+  const series = (name) => {
+    const m = html.match(new RegExp(`var\\s+${name}\\s*=\\s*\\[([^\\]]*)\\]`));
+    if (!m) return [];
+    return m[1]
+      .split(",")
+      .map((v) => Number(v.trim()))
+      .filter(Number.isFinite);
+  };
+
+  return {
+    station: text(/config1\.station\s*=\s*"([^"]+)"/),
+    absoluteHeightM: num(/水位海拔高\s*([\d.]+)\s*m/),
+    currentLevelM: num(/loadLiquidFillGauge\(\s*"fillgauge2"\s*,\s*"([\d.]+)"/),
+    leftBankM: num(/LEFTHEIGHT\s*=\s*"([\d.]+)"/),
+    rightBankM: num(/RIGHTHEIGHT\s*=\s*"([\d.]+)"/),
+    redAlertM: num(/redAlertLevel\s*=\s*"([\d.]+)"/),
+    yellowAlertM: num(/yellowAlerLevel\s*=\s*"([\d.]+)"/),
+    noAlertM: num(/noAlertLevel\s*=\s*"([\d.]+)"/),
+    stopgoM: num(/r_stopgo_m\s*=\s*"([\d.]+)"/),
+    timeRange: text(/aHighChartsTime\s*=\s*"([^"]+)"/),
+    waterSeries: series("yData"),
+    absHeightSeries: series("ABS_HEIGHTData"),
+    rainSeries: series("yRainData"),
+  };
+}
+
+export async function getWaterStationChart(no = TARGET_STATION_NO) {
+  const url = `${WATER_CHART_BASE}?no=${encodeURIComponent(no)}`;
+  const html = await fetchText(url, { headers: { Referer: WATER_URL } }, 60_000);
+  const data = parseWaterChart(html);
+  // The page renders a maintenance notice (no chart data) for unknown ids.
+  const found = data.currentLevelM != null || data.rightBankM != null;
+  return {
+    ...data,
+    no,
+    found,
+    source: url,
     updatedAt: new Date().toISOString(),
   };
 }
