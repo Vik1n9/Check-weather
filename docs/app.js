@@ -11,10 +11,12 @@ const fields = {
   currentRain: document.querySelector("#currentRain"),
   waterLevel: document.querySelector("#waterLevel"),
   waterStation: document.querySelector("#waterStation"),
+  waterStream: document.querySelector("#waterStream"),
   waterTime: document.querySelector("#waterTime"),
   waterNote: document.querySelector("#waterNote"),
-  waterImage: document.querySelector("#waterImage"),
   waterShotTime: document.querySelector("#waterShotTime"),
+  waterLiveLink: document.querySelector("#waterLiveLink"),
+  waterEmbedLevel: document.querySelector("#waterEmbedLevel"),
   radarTime: document.querySelector("#radarTime"),
   radarImage: document.querySelector("#radarImage"),
   radarCaption: document.querySelector("#radarCaption"),
@@ -41,31 +43,28 @@ function renderWeather(weather) {
   fields.currentRain.textContent = current.hourlyRainMm ? `${current.hourlyRainMm} mm` : "--";
 }
 
-function renderWater(water, bust) {
+function renderWater(water, updatedAt) {
+  const refresh = updatedAt ? `更新 ${updatedAt}` : "";
+  if (water && water.liveUrl) fields.waterLiveLink.href = water.liveUrl;
+
   if (!water || !water.found) {
     fields.waterLevel.textContent = "--";
     fields.waterStation.textContent = "找不到新街橋";
-    fields.waterTime.textContent = "--";
+    fields.waterStream.textContent = "--";
+    fields.waterTime.textContent = updatedAt || "--";
     fields.waterNote.textContent = (water && water.note) || "目前來源頁沒有回傳新街橋水位。";
-    if (!water || !water.imageFile) {
-      fields.waterImage.removeAttribute("src");
-      fields.waterShotTime.textContent = "--";
-    }
+    fields.waterEmbedLevel.textContent = "--";
+    fields.waterShotTime.textContent = refresh;
     return;
   }
 
   fields.waterLevel.textContent = water.level || "--";
   fields.waterStation.textContent = water.station || "新街橋";
-  fields.waterTime.textContent = water.observedAt || "--";
+  fields.waterStream.textContent = water.stream || "--";
+  fields.waterTime.textContent = updatedAt || "--";
   fields.waterNote.textContent = water.note || "";
-
-  if (water.imageFile) {
-    fields.waterImage.src = `./data/${water.imageFile}?t=${encodeURIComponent(bust)}`;
-    fields.waterShotTime.textContent = water.observedAt ? `資料時間 ${water.observedAt}` : "";
-  } else {
-    fields.waterImage.removeAttribute("src");
-    fields.waterShotTime.textContent = "尚無截圖";
-  }
+  fields.waterEmbedLevel.textContent = water.level || "--";
+  fields.waterShotTime.textContent = refresh;
 }
 
 function renderRadar(radar, bust) {
@@ -87,7 +86,7 @@ async function loadData() {
     const data = await response.json();
     const bust = data.generatedAt || Date.now();
     renderWeather(data.weather);
-    renderWater(data.water, bust);
+    renderWater(data.water, data.generatedAtTaipei || data.generatedAt);
     renderRadar(data.radar, bust);
     statusEl.textContent = `資料更新時間：${data.generatedAtTaipei || data.generatedAt || "--"}`;
   } catch (error) {
