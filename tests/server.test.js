@@ -5,6 +5,7 @@ import {
   parseWaterRows,
   parseRiverStations,
   parseWStationDetail,
+  parseWaterChart,
   parseRainProbability,
 } from "../scripts/sources.mjs";
 
@@ -83,6 +84,43 @@ test("parseWStationDetail pulls level, bank height, time and live image from a P
     imageUrl: "https://video3.wrbtycg.tw/node/image/abc?live=1",
     lat: "24.9628",
     lon: "121.23013",
+  });
+});
+
+test("parseWaterChart reads banks, alert levels and series from the D3 detail page", () => {
+  // Mirrors the inline JS that D3_reservior_mountain.aspx embeds for a station.
+  const html = `
+    <div style="border-radius: 5px 5px 0 0;">新街橋</div>
+    <div>(水位海拔高 124.65 m)</div>
+    config1.noAlertLevel = "1.55";
+    config1.yellowAlerLevel = "2.38";
+    config1.redAlertLevel = "2.88";
+    config1.maxValue = "3.88";
+    config1.r_stopgo_m = "0";
+    config1.RIGHTHEIGHT = "3.88";
+    config1.LEFTHEIGHT = "4.25";
+    //config1.station = "新街橋";
+    var gauge2 = loadLiquidFillGauge("fillgauge2", "0.76", config1);
+    var aHighChartsTime = "2026-06-18 16:30:00 ~ 2026-06-18 19:59:59";
+    var yData = [0.75,0.76,0.76];
+    var ABS_HEIGHTData = [124.643,124.653,124.653];
+    var yRainData = [0,0,0];
+  `;
+
+  assert.deepEqual(parseWaterChart(html), {
+    station: "新街橋",
+    absoluteHeightM: 124.65,
+    currentLevelM: 0.76,
+    leftBankM: 4.25,
+    rightBankM: 3.88,
+    redAlertM: 2.88,
+    yellowAlertM: 2.38,
+    noAlertM: 1.55,
+    stopgoM: 0,
+    timeRange: "2026-06-18 16:30:00 ~ 2026-06-18 19:59:59",
+    waterSeries: [0.75, 0.76, 0.76],
+    absHeightSeries: [124.643, 124.653, 124.653],
+    rainSeries: [0, 0, 0],
   });
 });
 

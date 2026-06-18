@@ -18,6 +18,7 @@ import {
   getRadar,
   getRiverStation,
   getWaterStationPOI,
+  getWaterStationChart,
   getTodayRainProbability,
   computeTodayHighLow,
   RIVER_URL,
@@ -94,15 +95,20 @@ async function prefetchRadar() {
 // popup shows). The image is a plain <img>, so — unlike the X-Frame-Options
 // guarded map page — it can be embedded / opened directly.
 async function prefetchWater() {
-  const [riverR, poiR] = await Promise.allSettled([
+  const [riverR, poiR, chartR] = await Promise.allSettled([
     getRiverStation(TARGET_STATION),
     getWaterStationPOI(TARGET_STATION),
+    getWaterStationChart(),
   ]);
   const river = riverR.status === "fulfilled" ? riverR.value : { found: false };
   const poi = poiR.status === "fulfilled" ? poiR.value : { found: false };
   if (poiR.status === "rejected") console.warn(`[water] POI feed: ${poiR.reason?.message}`);
+  if (chartR.status === "rejected") console.warn(`[water] cross-section: ${chartR.reason?.message}`);
+  // The cross-section detail (水位圖) — banks, 黃/紅警戒, 海拔高, current level.
+  // Optional: if it's momentarily down the rest of the water card still renders.
+  const chart = chartR.status === "fulfilled" && chartR.value.found ? chartR.value : null;
 
-  if (!river.found && !poi.found) {
+  if (!river.found && !poi.found && !chart) {
     return {
       found: false,
       station: TARGET_STATION,
@@ -113,16 +119,19 @@ async function prefetchWater() {
   }
   return {
     found: true,
-    station: poi.station || river.station,
+    station: poi.station || river.station || chart?.station || TARGET_STATION,
     stream: river.stream || "",
-    level: poi.level || river.waterLevel || "",
-    bankHeight: poi.bankHeight || "",
+    level: poi.level || river.waterLevel || (chart ? `${chart.currentLevelM}m` : ""),
+    bankHeight: poi.bankHeight || (chart?.rightBankM != null ? `${chart.rightBankM}m` : ""),
     observedAt: poi.observedAt || "",
     lat: poi.lat || river.lat || "",
     lon: poi.lon || river.lon || "",
     // Live station image — embedded / opened directly (a plain <img>, so the
     // map page's X-Frame-Options does not apply). null when the feed had none.
     imageUrl: poi.imageUrl || null,
+    // Official cross-section (水位圖) detail used to draw the 剖面圖 above the
+    // live image; null when the detail page was unavailable.
+    chart,
     // Official map (fallback link, e.g. when the live image is offline).
     liveUrl: RIVER_URL,
     source: poi.source || river.source,
