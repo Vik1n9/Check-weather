@@ -11,6 +11,13 @@ export const WATER_URL = "https://winfo.tycg.gov.tw/tysafep/Webpage/water.aspx";
 // The 新街橋 river-stage station (level + cross-section popup) lives on the map
 // home page, not water.aspx (which only lists reservoirs / 溪流水位站 без 新街橋).
 export const RIVER_URL = "https://winfo.tycg.gov.tw/tysafep/Default.aspx";
+// The map's own POI feed for 本局水位 (river-stage) stations. Each station carries
+// the same info the official map popup shows when you click its marker — water
+// level, bank height, observed time, and the live station image (剖面/即時影像).
+export const WATER_POI_URL =
+  "https://winfo.tycg.gov.tw/tysafep/json/proxy.ashx?op=GetAlertInfoPOI&type=WStation";
+// Per-station逐三小時 forecast module (contains 降雨機率 / probability of precipitation).
+export const CWA_AGRIM_3HR_BASE = "https://www.cwa.gov.tw/V8/C/L/AgriM/MOD/3hr/";
 
 export const TARGET_PID = "M024";
 export const TARGET_STATION = "新街橋";
@@ -281,6 +288,103 @@ export async function getRiverStation(name = TARGET_STATION) {
     levelImg: row.levelImg,
     found: true,
     source: RIVER_URL,
+    updatedAt: new Date().toISOString(),
+  };
+}
+
+// ---- River-stage station live detail (map POI feed) -----------------------
+// The official map shows, for each 本局水位 station, a popup with its current
+// reading and a live station image. We read that straight from the POI feed so
+// the page can surface the correct station directly, instead of sending the
+// user to the map to hunt for it.
+export function parseWStationDetail(item) {
+  const desc = item?.Description || "";
+  const grab = (re) => {
+    const m = desc.match(re);
+    return m ? htmlText(m[1]) : "";
+  };
+  const img = desc.match(/<img[^>]*\bsrc=["']([^"']+)["']/i);
+  return {
+    station: item?.Name || "",
+    level: grab(/高度水位[：:]\s*([^<\r\n]+)/),
+    bankHeight: grab(/河岸高度[：:]\s*([^<\r\n]+)/),
+    observedAt: grab(/資料時間[：:]\s*([^<\r\n]+)/),
+    imageUrl: img ? img[1] : "",
+    lat: item?.Latitude != null ? String(item.Latitude) : "",
+    lon: item?.Longitude != null ? String(item.Longitude) : "",
+  };
+}
+
+export async function getWaterStationPOI(name = TARGET_STATION) {
+  const txt = await fetchText(WATER_POI_URL, {}, 60_000);
+  let list = [];
+  try {
+    list = JSON.parse(txt);
+  } catch {
+    list = [];
+  }
+  const item =
+    list.find((s) => s?.Name === name) ||
+    list.find((s) => (s?.Name || "").includes(name));
+  if (!item) {
+    return {
+      station: name,
+      found: false,
+      source: WATER_POI_URL,
+      candidates: list.slice(0, 20).map((s) => s?.Name).filter(Boolean),
+      updatedAt: new Date().toISOString(),
+    };
+  }
+  return {
+    ...parseWStationDetail(item),
+    found: true,
+    source: WATER_POI_URL,
+    updatedAt: new Date().toISOString(),
+  };
+}
+
+// ---- Today's rain probability (降雨機率) ----------------------------------
+// The agricultural-station逐三小時 forecast module is a static HTML table whose
+// 降雨機率 row carries 12h PoP values; each cell's `headers` attribute ties it
+// to a day column (PC3_D1…). We map day columns to dates, then take today's
+// (Asia/Taipei) highest PoP as "今日降雨機率".
+export function parseRainProbability(html, now = new Date()) {
+  const dayDate = {};
+  for (const m of html.matchAll(/id="PC3_(D\d+)"[^>]*>\s*(\d{2}\/\d{2})/g))
+    dayDate[m[1]] = m[2];
+
+  const pops = {};
+  for (const m of html.matchAll(
+    /<td[^>]*headers="PC3_Po PC3_(D\d+)[^"]*"[^>]*>([\s\S]*?)<\/td>/g,
+  )) {
+    const v = htmlText(m[2]).match(/(\d+)\s*%/);
+    if (v) (pops[m[1]] ||= []).push(Number(v[1]));
+  }
+
+  const [, mo, da] = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Taipei",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  })
+    .format(now)
+    .split("-");
+  const todayMMDD = `${mo}/${da}`;
+  const todayDay = Object.keys(dayDate).find((d) => dayDate[d] === todayMMDD);
+  const vals = todayDay ? pops[todayDay] || [] : [];
+  return {
+    date: todayMMDD,
+    probabilityPercent: vals.length ? Math.max(...vals) : null,
+  };
+}
+
+export async function getTodayRainProbability(pid = TARGET_PID, now = new Date()) {
+  const url = `${CWA_AGRIM_3HR_BASE}${pid}_3hr_PC.html`;
+  const html = await fetchText(url, {}, 30_000);
+  return {
+    pid,
+    ...parseRainProbability(html, now),
+    source: url,
     updatedAt: new Date().toISOString(),
   };
 }

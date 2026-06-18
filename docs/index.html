@@ -21,15 +21,16 @@
 
       <section class="summary-grid">
         <article class="metric-card weather-card">
-          <span class="label">農工中心目前氣象</span>
-          <div class="metric-line">
-            <strong id="currentTemp">--</strong>
-            <span id="currentWeather">--</span>
+          <span class="label">農工中心今日氣溫</span>
+          <div class="temp-headline">
+            <div class="temp-item low"><span class="cap">今日最低</span><strong id="todayLow">--</strong></div>
+            <div class="temp-item high"><span class="cap">今日最高</span><strong id="todayHigh">--</strong></div>
+            <div class="temp-item pop"><span class="cap">今日降雨機率</span><strong id="todayPop">--</strong></div>
           </div>
-          <div class="highlow">
-            <div><dt>今日最低</dt><dd id="todayLow">--</dd></div>
-            <div><dt>今日最高</dt><dd id="todayHigh">--</dd></div>
-          </div>
+          <p class="now-line">
+            目前 <strong id="currentTemp">--</strong>
+            <span id="weatherObserved" class="meta">--</span>
+          </p>
           <dl>
             <div><dt>體感</dt><dd id="currentAt">--</dd></div>
             <div><dt>濕度</dt><dd id="currentRh">--</dd></div>
@@ -53,18 +54,26 @@
 
       <section class="radar-section water-embed">
         <div class="section-head">
-          <h2>新街橋水位剖面圖</h2>
+          <h2>新街橋即時水位影像</h2>
           <span id="waterShotTime">--</span>
         </div>
-        <div class="embed-cta">
-          <p class="embed-note">
-            桃園市水情資訊網禁止其他網站內嵌其畫面（伺服器設定 X-Frame-Options），
-            剖面圖無法直接顯示在此頁。點下方按鈕即可在新分頁開啟官方新街橋即時剖面圖。
-          </p>
-          <a id="waterLiveLink" class="cta-button"
+        <div class="water-shot">
+          <a id="waterLiveLink" class="water-shot-frame"
              href="https://winfo.tycg.gov.tw/tysafep/Default.aspx"
-             target="_blank" rel="noopener noreferrer">開啟新街橋即時剖面圖 ↗</a>
-          <p class="embed-meta">目前水位 <strong id="waterEmbedLevel">--</strong>（資料來源：桃園市水情資訊網）</p>
+             target="_blank" rel="noopener noreferrer">
+            <img id="waterShot" alt="新街橋即時水位影像">
+          </a>
+          <p id="waterShotFallback" class="embed-note" hidden>
+            即時影像暫時無法載入，可
+            <a id="waterMapLink"
+               href="https://winfo.tycg.gov.tw/tysafep/Default.aspx"
+               target="_blank" rel="noopener noreferrer">在桃園市水情資訊網地圖開啟新街橋 ↗</a>。
+          </p>
+          <p class="embed-meta">
+            目前水位 <strong id="waterEmbedLevel">--</strong>
+            ／河岸高度 <span id="waterBankHeight">--</span>
+            <span id="waterObservedAt" class="meta"></span>
+          </p>
         </div>
       </section>
 

@@ -10,10 +10,12 @@
 
 ## 資料內容
 
-- **中央氣象署農業氣象站 M024（農工中心）**：目前氣象，以及「今日 24 小時最高/最低溫」
-- **桃園市水情資訊網 — 新街橋**：從地圖首頁 `Default.aspx` 直接讀取新街橋即時水位（單純 HTTP，不需瀏覽器）。
-  官網的水位剖面圖禁止被其他網站內嵌（伺服器送 `X-Frame-Options: SAMEORIGIN`），
-  因此頁面以「即時連結」在新分頁開啟官方剖面圖，而非內嵌截圖。
+- **中央氣象署農業氣象站 M024（農工中心）**：以「今日最低／最高溫」為主要大字顯示，其次才是目前溫度；
+  並抓取農工中心今日降雨機率（逐三小時預報模組的 12 小時 PoP，取當日最大值）顯示在最低／最高溫旁。
+- **桃園市水情資訊網 — 新街橋**：從地圖 POI 來源（`proxy.ashx?op=GetAlertInfoPOI&type=WStation`）
+  讀取新街橋即時水位、河岸高度、觀測時間與「官方測站即時影像」。該影像是純 `<img>`，
+  不受地圖頁 `X-Frame-Options` 限制，因此直接內嵌在頁面顯示，並可點擊直接開啟正確的測站影像；
+  影像離線時自動退回官方地圖連結。即時水位另以 `Default.aspx` 取得溪流名稱與備援水位。
 - **中央氣象署雷達回波**：無地形、臺灣鄰近區域的最新靜止圖
 
 ## 架構
@@ -22,11 +24,12 @@
 GitHub Actions（每 2 小時／可手動）
   └─ scripts/prefetch.mjs
        ├─ 氣象署 .js → 今日最高/最低溫              → docs/data/summary.json
+       ├─ 氣象署 3hr 模組 → 今日降雨機率(PoP)        → docs/data/summary.json
        ├─ 雷達 .js + 下載圖                          → docs/data/radar.png
-       └─ 桃園 Default.aspx → 新街橋即時水位          → docs/data/summary.json
+       └─ 桃園 POI/Default.aspx → 新街橋水位+即時影像 → docs/data/summary.json
   └─ commit docs/data/* 回 repo
 GitHub Pages（main /docs）→ 顯示靜態頁面（讀 ./data/summary.json）
-  └─ 剖面圖以連結即時開啟官方頁（無法內嵌）
+  └─ 測站即時影像直接內嵌（純 <img>），離線時退回官方地圖連結
 ```
 
 - `docs/` — 靜態站台（`index.html` / `app.js` / `styles.css`）與預抓產物 `docs/data/`
