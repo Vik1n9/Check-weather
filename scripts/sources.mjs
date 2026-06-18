@@ -8,6 +8,9 @@ export const CWA_GT_URL = "https://www.cwa.gov.tw/Data/js/GT/TableData_GT_R_Agri
 export const CWA_RADAR_LIST_URL = "https://www.cwa.gov.tw/Data/js/obs_img/Observe_radar.js";
 export const CWA_RADAR_BASE_URL = "https://www.cwa.gov.tw/Data/radar/";
 export const WATER_URL = "https://winfo.tycg.gov.tw/tysafep/Webpage/water.aspx";
+// The 新街橋 river-stage station (level + cross-section popup) lives on the map
+// home page, not water.aspx (which only lists reservoirs / 溪流水位站 без 新街橋).
+export const RIVER_URL = "https://winfo.tycg.gov.tw/tysafep/Default.aspx";
 
 export const TARGET_PID = "M024";
 export const TARGET_STATION = "新街橋";
@@ -223,6 +226,61 @@ export async function getWater() {
     rightBankHeight: match.row.rightBankHeight,
     found: true,
     source: WATER_URL,
+    updatedAt: new Date().toISOString(),
+  };
+}
+
+// ---- River-stage stations (Default.aspx map repeater) ---------------------
+// Each station is an entry in the `repWater2` repeater, with fields split
+// across spans/inputs sharing a numeric suffix (…_<index>). Stitch them back
+// together by that index so field order on the page does not matter.
+export function parseRiverStations(html) {
+  const byIndex = new Map();
+  const slot = (i) => {
+    if (!byIndex.has(i)) byIndex.set(i, { index: i });
+    return byIndex.get(i);
+  };
+
+  for (const m of html.matchAll(/repWater2_labSTREAM_(\d+)"[^>]*>([\s\S]*?)<\/span>/g))
+    slot(m[1]).stream = htmlText(m[2]);
+  for (const m of html.matchAll(/repWater2_hlkLocationTitle_(\d+)"[^>]*>([\s\S]*?)<\/a>/g))
+    slot(m[1]).station = htmlText(m[2]);
+  for (const m of html.matchAll(/repWater2_labWater2_(\d+)"[^>]*>([\s\S]*?)<\/span>/g))
+    slot(m[1]).waterLevel = htmlText(m[2]);
+  for (const m of html.matchAll(/repWater2_hidLat_(\d+)"[^>]*value="([^"]*)"/g))
+    slot(m[1]).lat = m[2];
+  for (const m of html.matchAll(/repWater2_hidLon_(\d+)"[^>]*value="([^"]*)"/g))
+    slot(m[1]).lon = m[2];
+  for (const m of html.matchAll(/repWater2_imgLevel_(\d+)"[^>]*src="([^"]*)"/g))
+    slot(m[1]).levelImg = m[2];
+
+  return [...byIndex.values()].filter((s) => s.station);
+}
+
+export async function getRiverStation(name = TARGET_STATION) {
+  const html = await fetchText(RIVER_URL, {}, 60_000);
+  const stations = parseRiverStations(html);
+  const row =
+    stations.find((s) => s.station === name) ||
+    stations.find((s) => s.station.includes(name));
+  if (!row) {
+    return {
+      station: name,
+      found: false,
+      source: RIVER_URL,
+      candidates: stations.slice(0, 20).map((s) => s.station).filter(Boolean),
+      updatedAt: new Date().toISOString(),
+    };
+  }
+  return {
+    station: row.station,
+    stream: row.stream,
+    waterLevel: row.waterLevel,
+    lat: row.lat,
+    lon: row.lon,
+    levelImg: row.levelImg,
+    found: true,
+    source: RIVER_URL,
     updatedAt: new Date().toISOString(),
   };
 }

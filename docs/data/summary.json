@@ -25,13 +25,14 @@
   },
   "water": {
     "found": true,
-    "station": "觀新橋",
-    "level": "1.32m",
-    "fallbackUsed": true,
-    "note": "來源彈窗擷取失敗，且來源沒有「新街橋」，改顯示近似站「觀新橋」。",
-    "imageFile": "water.png",
-    "source": "https://winfo.tycg.gov.tw/tysafep/Webpage/water.aspx"
+    "station": "新街橋",
+    "stream": "新街溪",
+    "level": "0.76m",
+    "lat": "24.9628",
+    "lon": "121.23013",
+    "liveUrl": "https://winfo.tycg.gov.tw/tysafep/Default.aspx",
+    "source": "https://winfo.tycg.gov.tw/tysafep/Default.aspx"
   },
-  "generatedAt": "2026-06-18T04:27:42.548Z",
-  "generatedAtTaipei": "2026/06/18 12:27"
+  "generatedAt": "2026-06-18T10:37:30.445Z",
+  "generatedAtTaipei": "2026/06/18 18:37"
 }

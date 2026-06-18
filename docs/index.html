@@ -38,27 +38,34 @@
         </article>
 
         <article class="metric-card water-card">
-          <span class="label">新街橋水位高度</span>
+          <span class="label">新街橋即時水位</span>
           <div class="metric-line">
             <strong id="waterLevel">--</strong>
             <span id="waterStation">--</span>
           </div>
           <p id="waterNote" class="note"></p>
           <dl>
-            <div><dt>資料時間</dt><dd id="waterTime">--</dd></div>
+            <div><dt>溪流</dt><dd id="waterStream">--</dd></div>
+            <div><dt>資料更新</dt><dd id="waterTime">--</dd></div>
           </dl>
         </article>
       </section>
 
-      <section class="radar-section">
+      <section class="radar-section water-embed">
         <div class="section-head">
           <h2>新街橋水位剖面圖</h2>
           <span id="waterShotTime">--</span>
         </div>
-        <figure class="radar-frame">
-          <img id="waterImage" alt="新街橋水位剖面圖">
-          <figcaption id="waterCaption">桃園市水情資訊網，新街橋即時水位</figcaption>
-        </figure>
+        <div class="embed-cta">
+          <p class="embed-note">
+            桃園市水情資訊網禁止其他網站內嵌其畫面（伺服器設定 X-Frame-Options），
+            剖面圖無法直接顯示在此頁。點下方按鈕即可在新分頁開啟官方新街橋即時剖面圖。
+          </p>
+          <a id="waterLiveLink" class="cta-button"
+             href="https://winfo.tycg.gov.tw/tysafep/Default.aspx"
+             target="_blank" rel="noopener noreferrer">開啟新街橋即時剖面圖 ↗</a>
+          <p class="embed-meta">目前水位 <strong id="waterEmbedLevel">--</strong>（資料來源：桃園市水情資訊網）</p>
+        </div>
       </section>
 
       <section class="radar-section">

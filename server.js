@@ -7,7 +7,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { getWeather, getWater, getRadar } from "./scripts/sources.mjs";
+import { getWeather, getRiverStation, getRadar } from "./scripts/sources.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const publicDir = path.join(__dirname, "docs");
@@ -68,10 +68,10 @@ const server = http.createServer(async (req, res) => {
   try {
     // Legacy live API routes, kept for local debugging only.
     if (url.pathname === "/api/weather") return json(res, 200, await getWeather());
-    if (url.pathname === "/api/water") return json(res, 200, await getWater());
+    if (url.pathname === "/api/water") return json(res, 200, await getRiverStation());
     if (url.pathname === "/api/radar") return json(res, 200, await getRadar());
     if (url.pathname === "/api/summary") {
-      const [weather, water, radar] = await Promise.all([getWeather(), getWater(), getRadar()]);
+      const [weather, water, radar] = await Promise.all([getWeather(), getRiverStation(), getRadar()]);
       return json(res, 200, { weather, water, radar, updatedAt: new Date().toISOString() });
     }
     return serveStatic(req, res);
