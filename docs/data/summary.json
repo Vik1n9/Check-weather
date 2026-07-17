@@ -1,11 +1,11 @@
 {
   "weather": {
     "station": "農工中心",
-    "observedAt": "07/18 (六) 04:30",
+    "observedAt": "07/18 (六) 06:30",
     "current": {
-      "temperatureC": "28",
+      "temperatureC": "29",
       "apparentTemperatureC": "32",
-      "humidityPercent": "72",
+      "humidityPercent": "70",
       "hourlyRainMm": "0.0",
       "sunrise": "05:16",
       "sunset": "18:47"
@@ -18,7 +18,7 @@
     "source": "https://www.cwa.gov.tw/Data/js/3hr/ChartData_3hr_R_AgriM.js"
   },
   "radar": {
-    "observedAt": "2026/07/18 04:50",
+    "observedAt": "2026/07/18 06:40",
     "caption": "無地形，臺灣鄰近區域，靜止圖",
     "imageFile": "radar.png",
     "imageUrl": null,
@@ -28,31 +28,32 @@
     "found": true,
     "station": "新街橋",
     "stream": "新街溪",
-    "level": "0.75m",
+    "level": "0.74m",
     "bankHeight": "3.88m",
-    "observedAt": "2026/7/18 上午 04:50:00",
+    "observedAt": "2026/7/18 上午 06:40:00",
     "lat": "24.9628",
     "lon": "121.23013",
     "imageUrl": "https://video3.wrbtycg.tw/node/image/6a183cd6-4b89-42e2-8bbf-6272fdbb8acb?live=1",
     "chart": {
       "station": "新街橋",
-      "absoluteHeightM": 124.64,
-      "currentLevelM": 0.75,
+      "absoluteHeightM": 124.63,
+      "currentLevelM": 0.74,
       "leftBankM": 4.25,
       "rightBankM": 3.88,
       "redAlertM": 2.88,
       "yellowAlertM": 2.38,
       "noAlertM": 1.55,
       "stopgoM": 0,
-      "timeRange": "2026-07-18 01:50:00 ~ 2026-07-18 04:59:59",
+      "timeRange": "2026-07-18 03:40:00 ~ 2026-07-18 06:59:59",
       "waterSeries": [
+        0.74,
+        0.74,
+        0.74,
+        0.74,
+        0.74,
+        0.74,
+        0.74,
         0.75,
-        0.75,
-        0.75,
-        0.75,
-        0.75,
-        0.75,
-        0.75,
         0.74,
         0.74,
         0.74,
@@ -63,17 +64,17 @@
         0.74,
         0.74,
         0.74,
-        0.74,
-        0.75
+        0.74
       ],
       "absHeightSeries": [
+        124.633,
+        124.633,
+        124.633,
+        124.633,
+        124.633,
+        124.633,
+        124.633,
         124.643,
-        124.643,
-        124.643,
-        124.643,
-        124.643,
-        124.643,
-        124.643,
         124.633,
         124.633,
         124.633,
@@ -84,8 +85,7 @@
         124.633,
         124.633,
         124.633,
-        124.633,
-        124.643
+        124.633
       ],
       "rainSeries": [
         0,
@@ -111,11 +111,11 @@
       "no": "20160519140201",
       "found": true,
       "source": "https://winfo.tycg.gov.tw/TYSAMOBILE/DataReview/D3_reservior_mountain.aspx?no=20160519140201",
-      "updatedAt": "2026-07-17T21:00:27.052Z"
+      "updatedAt": "2026-07-17T22:53:34.407Z"
     },
     "liveUrl": "https://winfo.tycg.gov.tw/tysafep/Default.aspx",
     "source": "https://winfo.tycg.gov.tw/tysafep/json/proxy.ashx?op=GetAlertInfoPOI&type=WStation"
   },
-  "generatedAt": "2026-07-17T21:00:27.150Z",
-  "generatedAtTaipei": "2026/07/18 05:00"
+  "generatedAt": "2026-07-17T22:53:34.407Z",
+  "generatedAtTaipei": "2026/07/18 06:53"
 }
