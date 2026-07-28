@@ -1,11 +1,11 @@
 {
   "weather": {
     "station": "農工中心",
-    "observedAt": "07/29 (三) 04:30",
+    "observedAt": "07/29 (三) 06:30",
     "current": {
       "temperatureC": "27",
       "apparentTemperatureC": "32",
-      "humidityPercent": "86",
+      "humidityPercent": "83",
       "hourlyRainMm": "0.0",
       "sunrise": "05:21",
       "sunset": "18:42"
@@ -18,7 +18,7 @@
     "source": "https://www.cwa.gov.tw/Data/js/3hr/ChartData_3hr_R_AgriM.js"
   },
   "radar": {
-    "observedAt": "2026/07/29 05:00",
+    "observedAt": "2026/07/29 06:50",
     "caption": "無地形，臺灣鄰近區域，靜止圖",
     "imageFile": "radar.png",
     "imageUrl": null,
@@ -44,11 +44,11 @@
       "yellowAlertM": 2.38,
       "noAlertM": 1.55,
       "stopgoM": 0,
-      "timeRange": "2026-07-29 02:00:00 ~ 2026-07-29 05:59:59",
+      "timeRange": "2026-07-29 04:00:00 ~ 2026-07-29 07:59:59",
       "waterSeries": [
         0.76,
-        0.76,
-        0.76,
+        0.75,
+        0.75,
         0.76,
         0.76,
         0.76,
@@ -60,16 +60,16 @@
         0.76,
         0.76,
         0.75,
+        0.76,
+        0.76,
         0.75,
-        0.76,
-        0.76,
         0.76,
         0.76
       ],
       "absHeightSeries": [
         124.653,
-        124.653,
-        124.653,
+        124.643,
+        124.643,
         124.653,
         124.653,
         124.653,
@@ -81,14 +81,13 @@
         124.653,
         124.653,
         124.643,
+        124.653,
+        124.653,
         124.643,
-        124.653,
-        124.653,
         124.653,
         124.653
       ],
       "rainSeries": [
-        0,
         0,
         0,
         0,
@@ -111,11 +110,11 @@
       "no": "20160519140201",
       "found": true,
       "source": "https://winfo.tycg.gov.tw/TYSAMOBILE/DataReview/D3_reservior_mountain.aspx?no=20160519140201",
-      "updatedAt": "2026-07-28T21:12:12.764Z"
+      "updatedAt": "2026-07-28T23:03:46.777Z"
     },
     "liveUrl": "https://winfo.tycg.gov.tw/tysafep/Default.aspx",
     "source": "https://winfo.tycg.gov.tw/tysafep/json/proxy.ashx?op=GetAlertInfoPOI&type=WStation"
   },
-  "generatedAt": "2026-07-28T21:12:13.466Z",
-  "generatedAtTaipei": "2026/07/29 05:12"
+  "generatedAt": "2026-07-28T23:03:48.743Z",
+  "generatedAtTaipei": "2026/07/29 07:03"
 }
