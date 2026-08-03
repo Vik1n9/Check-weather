@@ -1,24 +1,24 @@
 {
   "weather": {
     "station": "農工中心",
-    "observedAt": "08/03 (一) 22:00",
+    "observedAt": "08/04 (二) 01:30",
     "current": {
-      "temperatureC": "29",
+      "temperatureC": "28",
       "apparentTemperatureC": "31",
-      "humidityPercent": "65",
+      "humidityPercent": "64",
       "hourlyRainMm": "0.0",
       "sunrise": "05:24",
-      "sunset": "18:39"
+      "sunset": "18:38"
     },
     "today": {
-      "highC": 29,
-      "lowC": 29,
-      "rainProbabilityPercent": 10
+      "highC": 35,
+      "lowC": 27,
+      "rainProbabilityPercent": 20
     },
     "source": "https://www.cwa.gov.tw/Data/js/3hr/ChartData_3hr_R_AgriM.js"
   },
   "radar": {
-    "observedAt": "2026/08/03 22:40",
+    "observedAt": "2026/08/04 01:40",
     "caption": "無地形，臺灣鄰近區域，靜止圖",
     "imageFile": "radar.png",
     "imageUrl": null,
@@ -30,7 +30,7 @@
     "stream": "新街溪",
     "level": "0.74m",
     "bankHeight": "3.88m",
-    "observedAt": "2026/8/3 下午 10:40:00",
+    "observedAt": "2026/8/4 上午 01:50:00",
     "lat": "24.9628",
     "lon": "121.23013",
     "imageUrl": "https://video3.wrbtycg.tw/node/image/6a183cd6-4b89-42e2-8bbf-6272fdbb8acb?live=1",
@@ -44,7 +44,7 @@
       "yellowAlertM": 2.38,
       "noAlertM": 1.55,
       "stopgoM": 0,
-      "timeRange": "2026-08-03 19:40:00 ~ 2026-08-03 22:59:59",
+      "timeRange": "2026-08-03 22:50:00 ~ 2026-08-04 01:59:59",
       "waterSeries": [
         0.74,
         0.74,
@@ -105,17 +105,16 @@
         0,
         0,
         0,
-        0,
         0
       ],
       "no": "20160519140201",
       "found": true,
       "source": "https://winfo.tycg.gov.tw/TYSAMOBILE/DataReview/D3_reservior_mountain.aspx?no=20160519140201",
-      "updatedAt": "2026-08-03T14:48:33.306Z"
+      "updatedAt": "2026-08-03T17:55:18.053Z"
     },
     "liveUrl": "https://winfo.tycg.gov.tw/tysafep/Default.aspx",
     "source": "https://winfo.tycg.gov.tw/tysafep/json/proxy.ashx?op=GetAlertInfoPOI&type=WStation"
   },
-  "generatedAt": "2026-08-03T14:48:34.406Z",
-  "generatedAtTaipei": "2026/08/03 22:48"
+  "generatedAt": "2026-08-03T17:55:18.270Z",
+  "generatedAtTaipei": "2026/08/04 01:55"
 }
