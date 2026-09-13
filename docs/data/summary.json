@@ -1,24 +1,24 @@
 {
   "weather": {
     "station": "農工中心",
-    "observedAt": "09/13 (日) 19:00",
+    "observedAt": "09/13 (日) 23:30",
     "current": {
-      "temperatureC": "28",
-      "apparentTemperatureC": "31",
-      "humidityPercent": "80",
+      "temperatureC": "27",
+      "apparentTemperatureC": "30",
+      "humidityPercent": "84",
       "hourlyRainMm": "0.0",
       "sunrise": "05:40",
       "sunset": "18:02"
     },
     "today": {
-      "highC": 28,
+      "highC": 27,
       "lowC": 27,
       "rainProbabilityPercent": 20
     },
     "source": "https://www.cwa.gov.tw/Data/js/3hr/ChartData_3hr_R_AgriM.js"
   },
   "radar": {
-    "observedAt": "2026/09/13 19:10",
+    "observedAt": "2026/09/13 23:40",
     "caption": "無地形，臺灣鄰近區域，靜止圖",
     "imageFile": "radar.png",
     "imageUrl": null,
@@ -30,7 +30,7 @@
     "stream": "新街溪",
     "level": "0.76m",
     "bankHeight": "3.88m",
-    "observedAt": "2026/9/13 下午 07:20:00",
+    "observedAt": "2026/9/13 下午 11:50:00",
     "lat": "24.9628",
     "lon": "121.23013",
     "imageUrl": "https://video3.wrbtycg.tw/node/image/6a183cd6-4b89-42e2-8bbf-6272fdbb8acb?live=1",
@@ -44,7 +44,7 @@
       "yellowAlertM": 2.38,
       "noAlertM": 1.55,
       "stopgoM": 0,
-      "timeRange": "2026-09-13 16:20:00 ~ 2026-09-13 19:59:59",
+      "timeRange": "2026-09-13 20:50:00 ~ 2026-09-13 23:59:59",
       "waterSeries": [
         0.76,
         0.76,
@@ -53,6 +53,7 @@
         0.76,
         0.76,
         0.76,
+        0.75,
         0.76,
         0.76,
         0.76,
@@ -61,8 +62,7 @@
         0.76,
         0.76,
         0.76,
-        0.76,
-        0.76,
+        0.75,
         0.75,
         0.76
       ],
@@ -74,6 +74,7 @@
         124.653,
         124.653,
         124.653,
+        124.643,
         124.653,
         124.653,
         124.653,
@@ -82,8 +83,7 @@
         124.653,
         124.653,
         124.653,
-        124.653,
-        124.653,
+        124.643,
         124.643,
         124.653
       ],
@@ -110,11 +110,11 @@
       "no": "20160519140201",
       "found": true,
       "source": "https://winfo.tycg.gov.tw/TYSAMOBILE/DataReview/D3_reservior_mountain.aspx?no=20160519140201",
-      "updatedAt": "2026-09-13T11:25:12.184Z"
+      "updatedAt": "2026-09-13T15:54:31.244Z"
     },
     "liveUrl": "https://winfo.tycg.gov.tw/tysafep/Default.aspx",
     "source": "https://winfo.tycg.gov.tw/tysafep/json/proxy.ashx?op=GetAlertInfoPOI&type=WStation"
   },
-  "generatedAt": "2026-09-13T11:25:13.260Z",
-  "generatedAtTaipei": "2026/09/13 19:25"
+  "generatedAt": "2026-09-13T15:54:31.347Z",
+  "generatedAtTaipei": "2026/09/13 23:54"
 }
