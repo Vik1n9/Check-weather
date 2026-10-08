@@ -1,24 +1,24 @@
 {
   "weather": {
     "station": "農工中心",
-    "observedAt": "10/08 (四) 16:00",
+    "observedAt": "10/09 (五) 00:00",
     "current": {
-      "temperatureC": "26",
-      "apparentTemperatureC": "27",
-      "humidityPercent": "66",
+      "temperatureC": "24",
+      "apparentTemperatureC": "25",
+      "humidityPercent": "74",
       "hourlyRainMm": "0.0",
-      "sunrise": "05:50",
-      "sunset": "17:35"
+      "sunrise": "05:51",
+      "sunset": "17:34"
     },
     "today": {
-      "highC": 28,
-      "lowC": 24,
+      "highC": 29,
+      "lowC": 23,
       "rainProbabilityPercent": 10
     },
     "source": "https://www.cwa.gov.tw/Data/js/3hr/ChartData_3hr_R_AgriM.js"
   },
   "radar": {
-    "observedAt": "2026/10/08 16:20",
+    "observedAt": "2026/10/09 01:00",
     "caption": "無地形，臺灣鄰近區域，靜止圖",
     "imageFile": "radar.png",
     "imageUrl": null,
@@ -30,7 +30,7 @@
     "stream": "新街溪",
     "level": "0.73m",
     "bankHeight": "3.88m",
-    "observedAt": "2026/10/8 下午 04:30:00",
+    "observedAt": "2026/10/9 上午 01:10:00",
     "lat": "24.9628",
     "lon": "121.23013",
     "imageUrl": "https://video3.wrbtycg.tw/node/image/6a183cd6-4b89-42e2-8bbf-6272fdbb8acb?live=1",
@@ -44,10 +44,10 @@
       "yellowAlertM": 2.38,
       "noAlertM": 1.55,
       "stopgoM": 0,
-      "timeRange": "2026-10-08 13:30:00 ~ 2026-10-08 16:59:59",
+      "timeRange": "2026-10-08 22:10:00 ~ 2026-10-09 01:59:59",
       "waterSeries": [
-        0.72,
-        0.72,
+        0.73,
+        0.73,
         0.73,
         0.73,
         0.73,
@@ -67,8 +67,8 @@
         0.73
       ],
       "absHeightSeries": [
-        124.613,
-        124.613,
+        124.623,
+        124.623,
         124.623,
         124.623,
         124.623,
@@ -110,11 +110,11 @@
       "no": "20160519140201",
       "found": true,
       "source": "https://winfo.tycg.gov.tw/TYSAMOBILE/DataReview/D3_reservior_mountain.aspx?no=20160519140201",
-      "updatedAt": "2026-10-08T08:37:23.473Z"
+      "updatedAt": "2026-10-08T17:17:10.092Z"
     },
     "liveUrl": "https://winfo.tycg.gov.tw/tysafep/Default.aspx",
     "source": "https://winfo.tycg.gov.tw/tysafep/json/proxy.ashx?op=GetAlertInfoPOI&type=WStation"
   },
-  "generatedAt": "2026-10-08T08:37:48.988Z",
-  "generatedAtTaipei": "2026/10/08 16:37"
+  "generatedAt": "2026-10-08T17:17:10.092Z",
+  "generatedAtTaipei": "2026/10/09 01:17"
 }
