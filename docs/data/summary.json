@@ -1,11 +1,11 @@
 {
   "weather": {
     "station": "農工中心",
-    "observedAt": "10/12 (一) 02:00",
+    "observedAt": "10/12 (一) 07:00",
     "current": {
-      "temperatureC": "23",
+      "temperatureC": "24",
       "apparentTemperatureC": "25",
-      "humidityPercent": "82",
+      "humidityPercent": "75",
       "hourlyRainMm": "0.0",
       "sunrise": "05:52",
       "sunset": "17:32"
@@ -18,7 +18,7 @@
     "source": "https://www.cwa.gov.tw/Data/js/3hr/ChartData_3hr_R_AgriM.js"
   },
   "radar": {
-    "observedAt": "2026/10/12 02:30",
+    "observedAt": "2026/10/12 07:20",
     "caption": "無地形，臺灣鄰近區域，靜止圖",
     "imageFile": "radar.png",
     "imageUrl": null,
@@ -44,16 +44,16 @@
       "yellowAlertM": 2.38,
       "noAlertM": 1.55,
       "stopgoM": 0,
-      "timeRange": "2026-10-11 23:40:00 ~ 2026-10-12 02:59:59",
+      "timeRange": "2026-10-12 04:20:00 ~ 2026-10-12 07:59:59",
       "waterSeries": [
-        0.72,
-        0.72,
-        0.72,
-        0.72,
+        0.7,
         0.71,
         0.71,
-        0.72,
-        0.72,
+        0.71,
+        0.71,
+        0.71,
+        0.71,
+        0.71,
         0.71,
         0.71,
         0.71,
@@ -67,14 +67,14 @@
         0.71
       ],
       "absHeightSeries": [
-        124.613,
-        124.613,
-        124.613,
-        124.613,
+        124.593,
         124.603,
         124.603,
-        124.613,
-        124.613,
+        124.603,
+        124.603,
+        124.603,
+        124.603,
+        124.603,
         124.603,
         124.603,
         124.603,
@@ -105,16 +105,17 @@
         0,
         0,
         0,
+        0,
         0
       ],
       "no": "20160519140201",
       "found": true,
       "source": "https://winfo.tycg.gov.tw/TYSAMOBILE/DataReview/D3_reservior_mountain.aspx?no=20160519140201",
-      "updatedAt": "2026-10-11T18:42:38.951Z"
+      "updatedAt": "2026-10-11T23:31:04.356Z"
     },
     "liveUrl": "https://winfo.tycg.gov.tw/tysafep/Default.aspx",
     "source": "https://winfo.tycg.gov.tw/tysafep/json/proxy.ashx?op=GetAlertInfoPOI&type=WStation"
   },
-  "generatedAt": "2026-10-11T18:42:53.397Z",
-  "generatedAtTaipei": "2026/10/12 02:42"
+  "generatedAt": "2026-10-11T23:31:18.935Z",
+  "generatedAtTaipei": "2026/10/12 07:31"
 }
