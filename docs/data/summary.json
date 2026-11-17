@@ -1,24 +1,24 @@
 {
   "weather": {
     "station": "農工中心",
-    "observedAt": "11/17 (二) 07:00",
+    "observedAt": "11/17 (二) 18:00",
     "current": {
-      "temperatureC": "21",
-      "apparentTemperatureC": "23",
-      "humidityPercent": "90",
+      "temperatureC": "23",
+      "apparentTemperatureC": "26",
+      "humidityPercent": "84",
       "hourlyRainMm": "0.0",
       "sunrise": "06:13",
       "sunset": "17:07"
     },
     "today": {
-      "highC": 26,
-      "lowC": 21,
-      "rainProbabilityPercent": 10
+      "highC": 23,
+      "lowC": 22,
+      "rainProbabilityPercent": 20
     },
     "source": "https://www.cwa.gov.tw/Data/js/3hr/ChartData_3hr_R_AgriM.js"
   },
   "radar": {
-    "observedAt": "2026/11/17 07:50",
+    "observedAt": "2026/11/17 18:10",
     "caption": "無地形，臺灣鄰近區域，靜止圖",
     "imageFile": "radar.png",
     "imageUrl": null,
@@ -30,6 +30,6 @@
     "liveUrl": "https://winfo.tycg.gov.tw/tysafep/Default.aspx",
     "note": "來源頁暫無「新街橋」水位資料。"
   },
-  "generatedAt": "2026-11-17T00:04:20.791Z",
-  "generatedAtTaipei": "2026/11/17 08:04"
+  "generatedAt": "2026-11-17T10:24:44.461Z",
+  "generatedAtTaipei": "2026/11/17 18:24"
 }
